@@ -1,0 +1,13 @@
+SERVICE_NAME: "taurus"
+ENVIRONMENT: "local"
+VERSION: "0.0.1"
+PORT: 8000
+
+DATABASE:
+  HOST: "localhost"
+  PORT: "3306"
+  DATABASE: "taurus_db"
+
+REDIS:
+  ADDR: "localhost:6379"
+  DB: 0

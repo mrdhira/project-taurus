@@ -21,7 +21,7 @@ Taurus App is a Go-based web service designed to manage financial expenses with 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/taurus-app.git
+git clone https://github.com/mrdhira/project-taurus.git
 cd taurus-app
 ```
 
@@ -36,10 +36,10 @@ cd taurus-app
 2. **Run the Docker Container**:
 
    ```
-   docker run -p 8080:8080 taurus-app
+   docker run -p 8000:8000 taurus-app
    ```
 
-   The service will be available on `http://localhost:8080`.
+   The service will be available on `http://localhost:8000`.
 
 ## Running the App Locally
 
@@ -55,7 +55,7 @@ cd taurus-app
    go run ./cmd/serveHttp
    ```
 
-   The application should now be running on `http://localhost:8080`.
+   The application should now be running on `http://localhost:8000`.
 
 ## Database Migrations
 
@@ -102,7 +102,7 @@ make migration-status
 You can adjust the following settings as needed:
 
 - **`DB_DSN`**: The MySQL database connection string can be modified in the `Makefile` for your environment.
-- **`Ports`**: The default port exposed by the app is `8080`. You can adjust this in the Dockerfile or when running the Docker container.
+- **`Ports`**: The default port exposed by the app is `8000`. You can adjust this in the Dockerfile or when running the Docker container.
 
 ## Building and Running the App
 

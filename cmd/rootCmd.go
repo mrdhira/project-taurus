@@ -8,7 +8,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-var ()
+var (
+	cfgFile  string
+	scrtFile string
+)
 
 var rootCmd = &cobra.Command{
 	Use:   "taurus",
@@ -37,16 +40,12 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initAppConfig)
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config.yaml)")
-	// rootCmd.PersistentFlags().StringVar(&scrtFile, "secret", "", "secret file (default is $HOME/.secret.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config.yaml)")
+	rootCmd.PersistentFlags().StringVar(&scrtFile, "secret", "", "secret file (default is $HOME/.secret.yaml)")
 	// rootCmd.PersistentFlags().StringVar(&migrationFile, "migration", "", "migration file (default is $HOME/migration/*.sql)")
 	// rootCmd.PersistentFlags().StringVar(&cronJob, "cronJob", "", "cronJob (example like calculate-all-merchant-eod-balance)")
 	// rootCmd.PersistentFlags().StringVar(&consoleName, "consoleName", "", "consoleName (example like migrate-transaction-fee)")
-	// rootCmd.PersistentFlags().StringP("author", "a", "Repo author", "author name for copyright attribution")
-	// rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	// viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	// viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	// viper.SetDefault("author", "Repository Author <repo_author@email.id>")
+
 }
 
 // initAppConfig initializes the application configuration.
@@ -56,5 +55,5 @@ func initAppConfig() {
 
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
 	viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	viper.SetDefault("author", "Dhira Wigata <github.com/dhirawigata>")
+	viper.SetDefault("author", "Dhira Wigata <github.com/mrdhira>")
 }

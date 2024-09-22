@@ -9,6 +9,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/mrdhira/project-taurus/config"
 	"github.com/mrdhira/project-taurus/port/httpExt"
 	"github.com/mrdhira/project-taurus/port/httpExt/middleware"
 
@@ -39,9 +40,13 @@ var serveHttpCmd = &cobra.Command{
 	Short: "Start HTTP server",
 	Long:  `Start Taurus HTTP server`,
 	Run: func(cmd *cobra.Command, args []string) {
+		appConfig, appSecret, err := config.New(cfgFile, scrtFile)
+		if err != nil {
+			panic(err)
+		}
 
 		// Package
-		logger, sql, redis, jwt, validate, err := initServeHttpPackage()
+		logger, sql, redis, jwt, validate, err := initServeHttpPackage(appConfig, appSecret)
 		if err != nil {
 			panic(err)
 		}

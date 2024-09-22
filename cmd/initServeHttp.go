@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/mrdhira/project-taurus/config"
 	"github.com/mrdhira/project-taurus/pkg/jwtExt"
 	"github.com/mrdhira/project-taurus/pkg/redisExt"
 	"github.com/mrdhira/project-taurus/pkg/sqlExt"
@@ -14,7 +15,7 @@ import (
 	"github.com/mrdhira/project-taurus/pkg/validatorExt"
 )
 
-func initServeHttpPackage() (
+func initServeHttpPackage(appConfig *config.AppConfig, appSecret *config.AppSecret) (
 	*slog.Logger,
 	sqlExt.ISqlExt,
 	redisExt.IRedisExt,
@@ -43,11 +44,11 @@ func initServeHttpPackage() (
 	// MySQL
 	errG.Go(func() error {
 		sql, err = mysql.New(mysql.Config{
-			Host:     "localhost",
-			Port:     "3306",
-			Database: "taurus",
-			Username: "user_svc",
-			Password: "password",
+			Host:     appConfig.Database.Host,
+			Port:     appConfig.Database.Port,
+			Database: appConfig.Database.Database,
+			Username: appSecret.Database.Username,
+			Password: appSecret.Database.Password,
 		})
 		if err != nil {
 			logger.Error("failed to connect to mysql", slog.String("error", err.Error()))
@@ -59,9 +60,9 @@ func initServeHttpPackage() (
 	// Redis
 	errG.Go(func() error {
 		redis, err = redisExt.New(redisExt.Config{
-			Addr:     "localhost:6379",
-			Password: "",
-			DB:       0,
+			Addr:     appConfig.Redis.Addr,
+			DB:       appConfig.Redis.DB,
+			Password: appSecret.Redis.Password,
 		})
 		if err != nil {
 			logger.Error("failed to connect to redis", slog.String("error", err.Error()))
@@ -72,9 +73,8 @@ func initServeHttpPackage() (
 
 	// JWT
 	errG.Go(func() error {
-		// TODO: Move secret key to secret manager
 		jwt = jwtExt.New(
-			"secret",
+			appSecret.JWTSecretKey,
 		)
 		return nil
 	})
